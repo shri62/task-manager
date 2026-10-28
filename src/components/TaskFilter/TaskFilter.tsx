@@ -1,24 +1,30 @@
 
-// Import the filter types
+import { useState } from 'react';
 import type { TaskFilterProps, TaskStatus } from '../../types';
 
-// Create the filter component
+// Display filters for task status and priority.
 function TaskFilter({ onFilterChange }: TaskFilterProps) {
+  const [status, setStatus] = useState<TaskStatus | undefined>();
+  const [priority, setPriority] = useState<
+    'low' | 'medium' | 'high' | undefined
+  >();
+
   return (
     <div>
       {/* Filter tasks by status */}
       <label htmlFor="status">Status: </label>
       <select
         id="status"
-        defaultValue="all"
-        onChange={(event) =>
-          onFilterChange({
-            status:
-              event.target.value === 'all'
-                ? undefined
-                : (event.target.value as TaskStatus),
-          })
-        }
+        value={status ?? 'all'}
+        onChange={(event) => {
+          const newStatus =
+            event.target.value === 'all'
+              ? undefined
+              : (event.target.value as TaskStatus);
+
+          setStatus(newStatus);
+          onFilterChange({ status: newStatus, priority });
+        }}
       >
         <option value="all">All Statuses</option>
         <option value="pending">Pending</option>
@@ -30,15 +36,16 @@ function TaskFilter({ onFilterChange }: TaskFilterProps) {
       <label htmlFor="priority"> Priority: </label>
       <select
         id="priority"
-        defaultValue="all"
-        onChange={(event) =>
-          onFilterChange({
-            priority:
-              event.target.value === 'all'
-                ? undefined
-                : (event.target.value as 'low' | 'medium' | 'high'),
-          })
-        }
+        value={priority ?? 'all'}
+        onChange={(event) => {
+          const newPriority =
+            event.target.value === 'all'
+              ? undefined
+              : (event.target.value as 'low' | 'medium' | 'high');
+
+          setPriority(newPriority);
+          onFilterChange({ status, priority: newPriority });
+        }}
       >
         <option value="all">All Priorities</option>
         <option value="low">Low</option>
