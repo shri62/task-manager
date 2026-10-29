@@ -73,3 +73,18 @@ export default defineConfig([
 ])
 
 ```
+1. How did you ensure unique keys for your list items?
+
+I used key={task.id} for each task. Every task has a unique ID, so React can identify each task easily.
+
+2. What considerations did you make when implementing the filtering functionality?
+
+I used filters for task status and priority. Users can select a status or priority to see only the tasks they want.
+
+3. How did you handle state updates for task status changes?
+
+I used a function called handleStatusChange to update the task's status when the user selects a new status.
+
+4. What challenges did you face when implementing conditional rendering?
+
+I had to make sure the correct message appeared for each task status. I used conditions to show different messages for pending, in-progress, and completed tasks.
